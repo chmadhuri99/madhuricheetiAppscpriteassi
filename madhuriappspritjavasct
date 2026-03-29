@@ -1,0 +1,33 @@
+const productContainer = document.getElementById("products");
+
+// Load all products
+function getProducts() {
+  fetch('https://fakestoreapi.com/products')
+    .then(res => res.json())
+    .then(data => displayProducts(data));
+}
+
+// Display products
+function displayProducts(products) {
+  productContainer.innerHTML = "";
+
+  products.forEach(product => {
+    productContainer.innerHTML += `
+      <div class="card">
+        <img src="${product.image}" />
+        <h4>${product.title}</h4>
+        <p>₹ ${product.price}</p>
+      </div>
+    `;
+  });
+}
+
+// Filter by category
+function filterCategory(category) {
+  fetch(`https://fakestoreapi.com/products/category/${category}`)
+    .then(res => res.json())
+    .then(data => displayProducts(data));
+}
+
+// Load on page start
+getProducts();
